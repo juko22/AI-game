@@ -1,7 +1,8 @@
-package com.juris_g.replace
+package com.juris_g.replace.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.juris_g.replace.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

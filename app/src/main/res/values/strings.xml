@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Replace</string>
+    <string name="start_game">Start game</string>
+    <string name="high_scores">High scores</string>
 </resources>
