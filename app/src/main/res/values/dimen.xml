@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="button_height">48dp</dimen>
+    <dimen name="edittext_height">48dp</dimen>
     <dimen name="button_text_size">16sp</dimen>
     <dimen name="margin_normal">16dp</dimen>
     <dimen name="button_corner_radius">4dp</dimen>
     <dimen name="button_border">2dp</dimen>
+    <dimen name="border_thickness">1dp</dimen>
+    <dimen name="number_window_width">24dp</dimen>
+    <dimen name="padding_small">2dp</dimen>
 </resources>
