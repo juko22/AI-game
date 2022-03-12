@@ -12,7 +12,7 @@
         android:layout_margin="@dimen/margin_normal"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="12"
-        tools:listitem="@layout/number_piece"
+        tools:listitem="@layout/game_piece"
         tools:itemCount="24"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/combine_numbers"

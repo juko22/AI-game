@@ -26,7 +26,6 @@
     </style>
 
     <style name="NumberView">
-        <item name="android:background">@drawable/bg_square_pill_gray</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">@dimen/button_text_size</item>

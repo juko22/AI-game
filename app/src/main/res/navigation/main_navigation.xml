@@ -6,10 +6,10 @@
 
     <fragment
         android:id="@+id/main_fragment"
-        android:name="com.juris_g.replace.ui.StartFragment"/>
+        android:name="com.juris_g.replace.ui.fragments.StartFragment"/>
 
     <fragment
         android:id="@+id/game_fragment"
-        android:name="com.juris_g.replace.ui.GameFragment"/>
+        android:name="com.juris_g.replace.ui.fragments.GameFragment"/>
 
 </navigation>

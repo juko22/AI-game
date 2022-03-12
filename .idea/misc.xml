@@ -5,11 +5,14 @@
       <map>
         <entry key="..\:/Users/juris/Replace/app/src/main/res/drawable-v24/button_background.xml" value="0.1" />
         <entry key="..\:/Users/juris/Replace/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
+        <entry key="..\:/Users/juris/Replace/app/src/main/res/drawable/bd_black.xml" value="0.1" />
+        <entry key="..\:/Users/juris/Replace/app/src/main/res/drawable/bg_square_pill_gray.xml" value="0.1" />
         <entry key="..\:/Users/juris/Replace/app/src/main/res/drawable/edittext_background.xml" value="0.1" />
         <entry key="..\:/Users/juris/Replace/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="..\:/Users/juris/Replace/app/src/main/res/drawable/number_background.xml" value="0.16" />
         <entry key="..\:/Users/juris/Replace/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/juris/Replace/app/src/main/res/layout/game_fragment.xml" value="0.18" />
+        <entry key="..\:/Users/juris/Replace/app/src/main/res/layout/game_piece.xml" value="0.12685185185185185" />
         <entry key="..\:/Users/juris/Replace/app/src/main/res/layout/number_piece.xml" value="0.75" />
         <entry key="..\:/Users/juris/Replace/app/src/main/res/layout/start_fragment.xml" value="0.20416666666666666" />
       </map>
