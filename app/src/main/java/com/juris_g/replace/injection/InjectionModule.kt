@@ -5,6 +5,8 @@ import com.juris_g.replace.App
 import com.juris_g.replace.common.DATABASE_NAME
 import com.juris_g.replace.repository.GameRepository
 import com.juris_g.replace.repository.GameRepositoryImpl
+import com.juris_g.replace.repository.GameTreeManager
+import com.juris_g.replace.repository.GameTreeManagerImpl
 import com.juris_g.replace.repository.cache.GameDatabase
 import dagger.Module
 import dagger.Provides
@@ -21,6 +23,10 @@ class InjectionModule(private val app: App) {
 
     @Provides
     @Singleton
-    fun provideGameRepository(database: GameDatabase): GameRepository =
-        GameRepositoryImpl(database.gameDao())
+    fun provideGameRepository(database: GameDatabase, gameTree: GameTreeManager): GameRepository =
+        GameRepositoryImpl(database.gameDao(), gameTree)
+
+    @Provides
+    @Singleton
+    fun provideGameTreeManager(): GameTreeManager = GameTreeManagerImpl()
 }

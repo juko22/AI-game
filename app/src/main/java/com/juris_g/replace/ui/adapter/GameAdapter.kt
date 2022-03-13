@@ -10,9 +10,9 @@ import kotlin.properties.Delegates
 
 class GameAdapter(private val onItemClick: (noteItem: GamePieceUIModel) -> Unit) : RecyclerView.Adapter<GameAdapter.ViewHolder>() {
 
-    var numbers: List<GamePieceUIModel> by Delegates.observable(emptyList(), { _, old, new ->
+    var numbers: List<GamePieceUIModel> by Delegates.observable(emptyList()) { _, old, new ->
         DiffUtil.calculateDiff(DifferenceUtil(old, new)).dispatchUpdatesTo(this)
-    })
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
         GamePieceBinding.inflate(
@@ -26,7 +26,6 @@ class GameAdapter(private val onItemClick: (noteItem: GamePieceUIModel) -> Unit)
         val item = numbers[position]
         holder.binding.number.tag = item
         holder.binding.item = item
-        //holder.binding.item = item
 
         holder.binding.number.setOnClickListener { cardView ->
             onItemClick(cardView.tag as GamePieceUIModel)

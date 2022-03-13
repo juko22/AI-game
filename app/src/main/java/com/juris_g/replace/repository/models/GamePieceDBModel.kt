@@ -8,6 +8,7 @@ import com.juris_g.replace.common.GAME_PIECES_TABLE
 data class GamePieceDBModel(
     @PrimaryKey
     val id: Int,
-    val number: Int,
-    val isSelected: Boolean
+    val numbers: Int,
+    val points: Int,
+    val nextSteps: Int,
 )

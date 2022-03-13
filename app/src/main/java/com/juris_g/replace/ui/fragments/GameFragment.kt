@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.juris_g.replace.common.launchIO
+import com.juris_g.replace.common.launchMain
+import com.juris_g.replace.common.launchUI
 import com.juris_g.replace.databinding.GameFragmentBinding
 import com.juris_g.replace.ui.adapter.GameAdapter
 import timber.log.Timber
@@ -13,8 +16,9 @@ class GameFragment : BaseFragment() {
     private lateinit var binding: GameFragmentBinding
 
     private val adapter by lazy {
-        GameAdapter { number ->
-            number.isSelected = !number.isSelected
+        GameAdapter { piece ->
+            viewModel.gamePieceClicked(piece)
+            Timber.d("Piece clicked")
         }
     }
 
@@ -31,6 +35,12 @@ class GameFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.numberList.adapter = adapter
 
-        adapter.numbers = viewModel.startGame()
+        viewModel.startGame()
+        launchMain {
+            viewModel.gamePieces.collect { gamePieces ->
+                adapter.numbers = gamePieces
+                Timber.d("Game pieces collected: $gamePieces")
+            }
+        }
     }
 }

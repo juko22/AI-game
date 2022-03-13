@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/juris/Desktop/AI-game/app/src/main/res/drawable/bd_black.xml" value="0.1015" />
+        <entry key="..\:/Users/juris/Desktop/AI-game/app/src/main/res/layout/game_fragment.xml" value="0.18425925925925926" />
+        <entry key="..\:/Users/juris/Desktop/AI-game/app/src/main/res/layout/game_piece.xml" value="0.9" />
+        <entry key="..\:/Users/juris/Desktop/AI-game/app/src/main/res/layout/start_fragment.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/juris/Replace/app/src/main/res/drawable-v24/button_background.xml" value="0.1" />
         <entry key="..\:/Users/juris/Replace/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
         <entry key="..\:/Users/juris/Replace/app/src/main/res/drawable/bd_black.xml" value="0.1" />
