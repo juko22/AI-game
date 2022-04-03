@@ -3,4 +3,6 @@
     <string name="start_game">Start game</string>
     <string name="high_scores">High scores</string>
     <string name="combine_numbers">Combine numbers</string>
+    <string name="start_game_player_makes_first_move">Start game (player makes first move)</string>
+    <string name="start_game_phone_makes_first_move">Start game (phone makes first move)</string>
 </resources>

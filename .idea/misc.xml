@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android Projects/AI Game/app/src/main/res/layout/game_fragment.xml" value="0.1" />
+        <entry key="..\:/Android Projects/AI Game/app/src/main/res/layout/game_piece.xml" value="0.17074275362318841" />
+        <entry key="..\:/Android Projects/AI Game/app/src/main/res/layout/start_fragment.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/juris/Desktop/AI-game/app/src/main/res/drawable/bd_black.xml" value="0.1015" />
         <entry key="..\:/Users/juris/Desktop/AI-game/app/src/main/res/layout/game_fragment.xml" value="0.18425925925925926" />
         <entry key="..\:/Users/juris/Desktop/AI-game/app/src/main/res/layout/game_piece.xml" value="0.9" />

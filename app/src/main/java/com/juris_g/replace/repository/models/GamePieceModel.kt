@@ -5,4 +5,6 @@ data class GamePieceModel(
     val numbers: List<Int>,
     val points: Int,
     val nextSteps: MutableList<Int>,
+    var gameResult: Int = 0,
+    var isMaxLevel: Boolean
 )

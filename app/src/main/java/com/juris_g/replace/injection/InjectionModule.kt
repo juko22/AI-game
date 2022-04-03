@@ -3,11 +3,9 @@ package com.juris_g.replace.injection
 import androidx.room.Room
 import com.juris_g.replace.App
 import com.juris_g.replace.common.DATABASE_NAME
-import com.juris_g.replace.repository.GameRepository
-import com.juris_g.replace.repository.GameRepositoryImpl
-import com.juris_g.replace.repository.GameTreeManager
-import com.juris_g.replace.repository.GameTreeManagerImpl
+import com.juris_g.replace.repository.*
 import com.juris_g.replace.repository.cache.GameDatabase
+import com.juris_g.replace.repository.models.DataConverters
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -28,5 +26,11 @@ class InjectionModule(private val app: App) {
 
     @Provides
     @Singleton
-    fun provideGameTreeManager(): GameTreeManager = GameTreeManagerImpl()
+    fun provideMinMaxAlgorithm(database: GameDatabase): MiniMaxAlgorithm =
+        MiniMaxAlgorithmImpl(database.gameDao())
+
+    @Provides
+    @Singleton
+    fun provideGameTreeManager(database: GameDatabase, minMaxAlg: MiniMaxAlgorithm): GameTreeManager =
+        GameTreeManagerImpl(database.gameDao(), minMaxAlg)
 }

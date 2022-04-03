@@ -25,7 +25,12 @@ class StartFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.startGame.setOnClickListener {
+        binding.startGamePhone.setOnClickListener {
+            viewModel.playerFirst = false
+            openFragment(R.id.game_fragment)
+        }
+        binding.startGamePlayer.setOnClickListener {
+            viewModel.playerFirst = true
             openFragment(R.id.game_fragment)
         }
     }

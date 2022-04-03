@@ -7,8 +7,9 @@ import com.juris_g.replace.ui.models.GamePieceUIModel
 class GameViewModel(private val repository: GameRepository) : ViewModel() {
 
     val gamePieces = repository.gamePieces
+    var playerFirst: Boolean = false;
 
-    fun startGame() = repository.startTheGame()
+    fun startGame() = repository.startTheGame(playerFirst)
 
     fun gamePieceClicked(gamePiece: GamePieceUIModel) = repository.gamePieceClicked(gamePiece)
 }
