@@ -26,11 +26,13 @@ class StartFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.startGamePhone.setOnClickListener {
-            viewModel.playerFirst = false
+            viewModel.clearRepo()
+            viewModel.startGame(false)
             openFragment(R.id.game_fragment)
         }
         binding.startGamePlayer.setOnClickListener {
-            viewModel.playerFirst = true
+            viewModel.clearRepo()
+            viewModel.startGame(true)
             openFragment(R.id.game_fragment)
         }
     }
