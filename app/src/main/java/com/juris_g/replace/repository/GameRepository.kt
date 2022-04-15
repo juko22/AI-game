@@ -1,10 +1,13 @@
 package com.juris_g.replace.repository
 
+import com.juris_g.replace.common.createMoveTurnModel
 import com.juris_g.replace.common.createUIGamePeace
 import com.juris_g.replace.common.launchIO
+import com.juris_g.replace.common.listToString
 import com.juris_g.replace.repository.Dao.GameDao
 import com.juris_g.replace.repository.models.GamePieceModel
 import com.juris_g.replace.ui.models.GamePieceUIModel
+import com.juris_g.replace.ui.models.GameTurnModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -13,6 +16,7 @@ import timber.log.Timber
 
 interface GameRepository {
     val gamePieces: SharedFlow<List<GamePieceUIModel>>
+    val gameMoves: SharedFlow<List<GameTurnModel>>
     var points: Int
     var wasPlayerFirst: Boolean
     fun startTheGame(playerFirst: Boolean)
@@ -27,14 +31,18 @@ class GameRepositoryImpl(
 ) : GameRepository {
 
     private val _gamePieces = MutableSharedFlow<List<GamePieceUIModel>>(replay = 1)
+    private val _gameMoves = MutableSharedFlow<List<GameTurnModel>>(replay = 1)
     private var gamePiecesUI = mutableListOf<GamePieceUIModel>()
     private var gameTree = mutableListOf<GamePieceModel>()
     override var points = 0
     private lateinit var currentState: GamePieceModel
     override var wasPlayerFirst: Boolean = false
     private var lastID = 0
+    private var movesList = mutableListOf<GameTurnModel>()
+    private var moveTurnId = 0
 
     override val gamePieces = _gamePieces.asSharedFlow()
+    override val gameMoves = _gameMoves.asSharedFlow()
 
     override fun startTheGame(playerFirst: Boolean) {
         launchIO {
@@ -53,6 +61,14 @@ class GameRepositoryImpl(
             _gamePieces.tryEmit(newNumbers)
             lastID = newNumbers.last().id
             Timber.d("Is player first: $playerFirst")
+            movesList.add(createMoveTurnModel(
+                moveTurnId,
+                "Start state",
+                gamePiecesUI.listToString(),
+                points.toString()
+            ))
+            _gameMoves.tryEmit(movesList)
+            moveTurnId++
             if (!playerFirst) {
                 makeComputerMove()
             }
@@ -154,6 +170,15 @@ class GameRepositoryImpl(
                 }
             }
             _gamePieces.tryEmit(gamePiecesUI)
+            movesList.add(createMoveTurnModel(
+                moveTurnId,
+                "Player $moveTurnId",
+                gamePiecesUI.listToString(),
+                points.toString()
+            ))
+            Timber.d("Move list: $movesList")
+            _gameMoves.tryEmit(movesList)
+            moveTurnId++
             Timber.d("Player move: $currentState")
             if (gamePiecesUI.size > 1) {
                 makeComputerMove()
@@ -180,48 +205,65 @@ class GameRepositoryImpl(
     }
 
     private fun makeComputerMove() {
-        if (wasPlayerFirst) {
-            var computerMove = gameTree.firstOrNull { gameState ->
-                currentState.nextSteps.any { it == gameState.id } &&
-                        gameState.gameResult == -1
-            }
-            if (computerMove == null) {
-                computerMove = gameTree.first { gameState ->
-                    currentState.nextSteps.first() == gameState.id
+        launchIO {
+            if (wasPlayerFirst) {
+                var computerMove = gameTree.firstOrNull { gameState ->
+                    currentState.nextSteps.any { it == gameState.id } &&
+                            gameState.gameResult == -1
                 }
-            }
-            Timber.d("Computer move: $computerMove")
-            currentState = computerMove
-            points = currentState.points
-            var nextID = 0
-            gamePiecesUI.clear()
-            computerMove.numbers.forEach { number ->
-                nextID++
-                gamePiecesUI.add(createUIGamePeace(nextID, number))
-            }
-            _gamePieces.tryEmit(gamePiecesUI)
-        } else {
-            var computerMove = gameTree.firstOrNull { gameState ->
-                currentState.nextSteps.any { it == gameState.id } &&
-                        gameState.gameResult == 1
-            }
-            if (computerMove == null) {
-                computerMove = gameTree.first { gameState ->
-                    currentState.nextSteps.first() == gameState.id
+                if (computerMove == null) {
+                    computerMove = gameTree.first { gameState ->
+                        currentState.nextSteps.first() == gameState.id
+                    }
                 }
+                Timber.d("Computer move: $computerMove")
+                currentState = computerMove
+                points = currentState.points
+                var nextID = 0
+                gamePiecesUI.clear()
+                computerMove.numbers.forEach { number ->
+                    nextID++
+                    gamePiecesUI.add(createUIGamePeace(nextID, number))
+                }
+                movesList.add(createMoveTurnModel(
+                    moveTurnId,
+                    "Phone $moveTurnId",
+                    gamePiecesUI.listToString(),
+                    points.toString()
+                ))
+                _gameMoves.tryEmit(movesList)
+                moveTurnId++
+                _gamePieces.tryEmit(gamePiecesUI)
+            } else {
+                var computerMove = gameTree.firstOrNull { gameState ->
+                    currentState.nextSteps.any { it == gameState.id } &&
+                            gameState.gameResult == 1
+                }
+                if (computerMove == null) {
+                    computerMove = gameTree.first { gameState ->
+                        Timber.d("No state found with value 1")
+                        currentState.nextSteps.first() == gameState.id
+                    }
+                }
+                Timber.d("Computer move: $computerMove")
+                currentState = computerMove
+                points = currentState.points
+                var nextID = 0
+                gamePiecesUI.clear()
+                computerMove.numbers.forEach { number ->
+                    nextID++
+                    gamePiecesUI.add(createUIGamePeace(nextID, number))
+                }
+                movesList.add(createMoveTurnModel(
+                    moveTurnId,
+                    "Phone $moveTurnId",
+                    gamePiecesUI.listToString(),
+                    points.toString()
+                ))
+                _gameMoves.tryEmit(movesList)
+                moveTurnId++
+                _gamePieces.tryEmit(gamePiecesUI)
             }
-            Timber.d("Computer move: $computerMove")
-            currentState = computerMove
-            points = currentState.points
-            var nextID = 0
-            gamePiecesUI.clear()
-            computerMove.numbers.forEach { number ->
-                nextID++
-                gamePiecesUI.add(createUIGamePeace(nextID, number))
-            }
-            _gamePieces.tryEmit(gamePiecesUI)
         }
     }
-
-
 }
