@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 
 interface GameTreeManager {
     fun createGameTree(playerFirst: Boolean): Flow<List<GamePieceModel>>
+    fun clearGameTree()
 }
 
 class GameTreeManagerImpl(
@@ -21,7 +22,7 @@ class GameTreeManagerImpl(
 
     override fun createGameTree(playerFirst: Boolean): Flow<List<GamePieceModel>> = flowIO {
         var numbers = mutableListOf<Int>()
-        for (i in 0..5) {
+        for (i in 0..3) {
             numbers.add((1..7).random())
         }
         var isMaxLevel = !playerFirst
@@ -88,8 +89,12 @@ class GameTreeManagerImpl(
             }
         }
         Timber.d("Game states: $gameTree")
-        Timber.d("Game states with path: ${minMaxAlg.findWinningPaths(gameTree)}")
+        Timber.d("\nGame states with path: ${minMaxAlg.findWinningPaths(gameTree)}")
         emit(minMaxAlg.findWinningPaths(gameTree))
         //gameDao.addGameStates(gameTree)
+    }
+
+    override fun clearGameTree() {
+        gameTree.clear()
     }
 }

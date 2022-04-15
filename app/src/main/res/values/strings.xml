@@ -5,4 +5,8 @@
     <string name="combine_numbers">Combine numbers</string>
     <string name="start_game_player_makes_first_move">Start game (player makes first move)</string>
     <string name="start_game_phone_makes_first_move">Start game (phone makes first move)</string>
+    <string name="points_0">Points: 0</string>
+    <string name="player_won">Player has won</string>
+    <string name="phone_won">Phone has won</string>
+    <string name="pointsStart">Points: 0</string>
 </resources>

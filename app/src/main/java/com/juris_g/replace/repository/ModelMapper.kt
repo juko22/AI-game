@@ -11,3 +11,7 @@ fun GamePieceModel.asGamePieceDBModel() = GamePieceDBModel(
     points = points,
     nextSteps = nextSteps.toString()
 )
+
+fun List<GamePieceModel>.asGamePiecesDBModelList() = map {
+    it.asGamePieceDBModel()
+}
