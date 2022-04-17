@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.juris_g.replace.App
 import com.juris_g.replace.R
-import com.juris_g.replace.common.launchMain
 import com.juris_g.replace.common.launchUI
 import com.juris_g.replace.common.openFragment
 import com.juris_g.replace.databinding.GameFragmentBinding
 import com.juris_g.replace.ui.adapter.GameAdapter
+import com.juris_g.replace.ui.adapter.GameTurnsAdapter
 import timber.log.Timber
 
 class GameFragment : BaseFragment() {
@@ -25,6 +25,8 @@ class GameFragment : BaseFragment() {
         }
     }
 
+    private val movesAdapter by lazy { GameTurnsAdapter() }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -37,8 +39,11 @@ class GameFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.numberList.adapter = adapter
-        adapter.numbers = emptyList()
+        binding.moves.adapter = movesAdapter
         binding.numberList.itemAnimator = null
+        binding.moves.itemAnimator = null
+        adapter.numbers = emptyList()
+        movesAdapter.moves = emptyList()
 
         binding.combineNumbers.setOnClickListener {
             viewModel.makeTheMove()
@@ -47,8 +52,9 @@ class GameFragment : BaseFragment() {
         launchUI {
             viewModel.gamePieces.collect { gamePieces ->
                 adapter.numbers = gamePieces
+                adapter.notifyDataSetChanged()
                 Timber.d("Game pieces collected: $gamePieces")
-                binding.points.text = "Points: " + viewModel.getPoints()
+                binding.points.text = "Points: ${viewModel.getPoints()}"
                 if (gamePieces.size == 1) {
                     viewModel.gameOver(gamePieces.first().number)
                 }
@@ -66,6 +72,15 @@ class GameFragment : BaseFragment() {
                     App.clearViewModel()
                     openFragment(R.id.main_fragment)
                 }.setCancelable(false).show()
+            }
+        }
+
+        launchUI {
+            viewModel.gameMoves.collect { moves ->
+                Timber.d("Moves collected: $moves")
+                movesAdapter.moves = moves
+                movesAdapter.notifyDataSetChanged()
+                Timber.d("Moves adapter list size: ${movesAdapter.itemCount}")
             }
         }
     }

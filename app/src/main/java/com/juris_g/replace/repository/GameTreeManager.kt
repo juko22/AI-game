@@ -22,14 +22,14 @@ class GameTreeManagerImpl(
 
     override fun createGameTree(playerFirst: Boolean): Flow<List<GamePieceModel>> = flowIO {
         var numbers = mutableListOf<Int>()
-        for (i in 0..3) {
-            numbers.add((1..7).random())
+        for (i in 0..6) {
+            numbers.add((1..5).random())
         }
-        var isMaxLevel = !playerFirst
+        var isMaxLevel = true
         var currentState = createGamePiece(0, numbers, 0, isMaxLevel)
         gameTree.add(currentState)
         var nextId = 1
-        Timber.d("Numbers first: $numbers")
+        Timber.d("Numbers generated: $numbers")
         isMaxLevel = !isMaxLevel
         var numbersListSize = numbers.size - 1
 
@@ -81,7 +81,7 @@ class GameTreeManagerImpl(
                     gameTree.last().isMaxLevel = isMaxLevel
                 }
             }
-            if (gameTree.any { it.id ==  currentState.id + 1}) {
+            if (gameTree.any { it.id == currentState.id + 1}) {
                 currentState = gameTree[currentState.id + 1]
                 numbers = currentState.numbers.toMutableList()
             } else {
@@ -91,7 +91,6 @@ class GameTreeManagerImpl(
         Timber.d("Game states: $gameTree")
         Timber.d("\nGame states with path: ${minMaxAlg.findWinningPaths(gameTree)}")
         emit(minMaxAlg.findWinningPaths(gameTree))
-        //gameDao.addGameStates(gameTree)
     }
 
     override fun clearGameTree() {

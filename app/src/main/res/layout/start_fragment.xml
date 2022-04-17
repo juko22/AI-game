@@ -25,14 +25,4 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/start_game_phone" />
 
-    <TextView
-        android:id="@+id/high_scores"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/button_height"
-        style="@style/ButtonStyle"
-        android:text="@string/high_scores"
-        app:layout_constraintTop_toBottomOf="@id/start_game_player"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

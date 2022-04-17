@@ -14,6 +14,7 @@ class GameViewModel(private val repository: GameRepository) : ViewModel() {
 
     val playerHasWon = _playerHasWon.asSharedFlow()
     val gamePieces = repository.gamePieces
+    val gameMoves = repository.gameMoves
 
     fun startGame(playerFirst: Boolean) {
         repository.startTheGame(playerFirst)
