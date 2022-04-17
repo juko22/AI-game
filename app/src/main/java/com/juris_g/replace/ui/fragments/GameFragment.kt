@@ -52,8 +52,9 @@ class GameFragment : BaseFragment() {
         launchUI {
             viewModel.gamePieces.collect { gamePieces ->
                 adapter.numbers = gamePieces
+                adapter.notifyDataSetChanged()
                 Timber.d("Game pieces collected: $gamePieces")
-                binding.points.text = "Points: " + viewModel.getPoints()
+                binding.points.text = "Points: ${viewModel.getPoints()}"
                 if (gamePieces.size == 1) {
                     viewModel.gameOver(gamePieces.first().number)
                 }
@@ -78,6 +79,8 @@ class GameFragment : BaseFragment() {
             viewModel.gameMoves.collect { moves ->
                 Timber.d("Moves collected: $moves")
                 movesAdapter.moves = moves
+                movesAdapter.notifyDataSetChanged()
+                Timber.d("Moves adapter list size: ${movesAdapter.itemCount}")
             }
         }
     }

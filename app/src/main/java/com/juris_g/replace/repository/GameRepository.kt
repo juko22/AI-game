@@ -37,9 +37,9 @@ class GameRepositoryImpl(
     override var points = 0
     private lateinit var currentState: GamePieceModel
     override var wasPlayerFirst: Boolean = false
-    private var lastID = 0
     private var movesList = mutableListOf<GameTurnModel>()
     private var moveTurnId = 0
+    private var nextId = 0
 
     override val gamePieces = _gamePieces.asSharedFlow()
     override val gameMoves = _gameMoves.asSharedFlow()
@@ -59,7 +59,6 @@ class GameRepositoryImpl(
             gamePiecesUI = newNumbers
             Timber.d("UI list content at start: $gamePiecesUI")
             _gamePieces.tryEmit(newNumbers)
-            lastID = newNumbers.last().id
             Timber.d("Is player first: $playerFirst")
             movesList.add(createMoveTurnModel(
                 moveTurnId,
@@ -68,6 +67,7 @@ class GameRepositoryImpl(
                 points.toString()
             ))
             _gameMoves.tryEmit(movesList)
+            nextId = gamePiecesUI.last().id
             moveTurnId++
             if (!playerFirst) {
                 makeComputerMove()
@@ -119,11 +119,10 @@ class GameRepositoryImpl(
                     currentState = possibleMoves.first {
                         it.points == points && areListsTheSame(it.numbers, gamePieces)
                     }
-                    var nextID = 0
                     gamePiecesUI.clear()
                     currentState.numbers.forEach { number ->
-                        nextID++
-                        gamePiecesUI.add(createUIGamePeace(nextID, number))
+                        nextId++
+                        gamePiecesUI.add(createUIGamePeace(nextId, number))
                     }
                 }
                 sumOfSelectedNumbers < 7 -> {
@@ -139,11 +138,10 @@ class GameRepositoryImpl(
                     currentState = possibleMoves.first { state ->
                         state.points == points && areListsTheSame(state.numbers, gamePieces)
                     }
-                    var nextID = 0
                     gamePiecesUI.clear()
                     currentState.numbers.forEach { number ->
-                        nextID++
-                        gamePiecesUI.add(createUIGamePeace(nextID, number))
+                        nextId++
+                        gamePiecesUI.add(createUIGamePeace(nextId, number))
                     }
                 }
                 sumOfSelectedNumbers == 7 -> {
@@ -161,11 +159,10 @@ class GameRepositoryImpl(
                     currentState = possibleMoves.first {
                         it.points == points && areListsTheSame(it.numbers, gamePieces)
                     }
-                    var nextID = 0
                     gamePiecesUI.clear()
                     currentState.numbers.forEach { number ->
-                        nextID++
-                        gamePiecesUI.add(createUIGamePeace(nextID, number))
+                        nextId++
+                        gamePiecesUI.add(createUIGamePeace(nextId, number))
                     }
                 }
             }
@@ -190,9 +187,12 @@ class GameRepositoryImpl(
         points = 0
         gameTree.clear()
         gamePiecesUI.clear()
+        movesList.clear()
+        _gameMoves.tryEmit(emptyList())
         _gamePieces.tryEmit(gamePiecesUI)
         gameTreeManager.clearGameTree()
-        lastID = 0
+        moveTurnId = 0
+        nextId = 0
     }
 
     private fun areListsTheSame(list1: List<Int>, list2: List<GamePieceUIModel>): Boolean {
@@ -219,11 +219,10 @@ class GameRepositoryImpl(
                 Timber.d("Computer move: $computerMove")
                 currentState = computerMove
                 points = currentState.points
-                var nextID = 0
                 gamePiecesUI.clear()
                 computerMove.numbers.forEach { number ->
-                    nextID++
-                    gamePiecesUI.add(createUIGamePeace(nextID, number))
+                    nextId++
+                    gamePiecesUI.add(createUIGamePeace(nextId, number))
                 }
                 movesList.add(createMoveTurnModel(
                     moveTurnId,
@@ -248,11 +247,10 @@ class GameRepositoryImpl(
                 Timber.d("Computer move: $computerMove")
                 currentState = computerMove
                 points = currentState.points
-                var nextID = 0
                 gamePiecesUI.clear()
                 computerMove.numbers.forEach { number ->
-                    nextID++
-                    gamePiecesUI.add(createUIGamePeace(nextID, number))
+                    nextId++
+                    gamePiecesUI.add(createUIGamePeace(nextId, number))
                 }
                 movesList.add(createMoveTurnModel(
                     moveTurnId,

@@ -5,7 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.juris_g.replace.common.AdapterDiff
+import com.juris_g.replace.databinding.GamePieceBinding
 import com.juris_g.replace.databinding.GameTurnsBinding
+import com.juris_g.replace.ui.models.GamePieceUIModel
 import com.juris_g.replace.ui.models.GameTurnModel
 import kotlin.properties.Delegates
 
@@ -36,5 +38,4 @@ class GameTurnsAdapter : RecyclerView.Adapter<GameTurnsAdapter.ViewHolder>() {
     override fun getItemCount() = moves.size
 
     inner class ViewHolder(val binding: GameTurnsBinding) : RecyclerView.ViewHolder(binding.root)
-
 }
